@@ -1,26 +1,27 @@
 <br />
 <div align="center">
-  <a href="https://adrianogtl.github.io/REPO_NAME/">
+  <!-- <a href="https://adrianogtl.github.io/top-rock-paper-scissors/">
     <img src=".github/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
-<h3 align="center">Title</h3>
+<h3 align="center">Rock Paper Scissors | The Odin Project</h3>
 
   <p align="center">
-    Description
     <br />
     <br />
-    <a href="https://adrianogtl.github.io/REPO_NAME/">View demo 👀</a>
+    <a href="https://adrianogtl.github.io/top-rock-paper-scissors/">View demo 👀</a>
     &nbsp;&nbsp;&nbsp;
-    <a href="#">link 📚</a>
+    <a href="https://www.theodinproject.com/lessons/foundations-rock-paper-scissors#assignment">The Odin Project 📚</a>
 
   </p>
 </div>
 
 ## 🎯 About
 
-![Screenshot](.github/screenshot.jpg)
+- This project is part of the Foundations Course from The Odin Project
+
+<!-- ![Screenshot](.github/screenshot.jpg)
 
 ## 🚀 Technologies
 
-## ♥️ Acknowledgments
+## ♥️ Acknowledgments -->
