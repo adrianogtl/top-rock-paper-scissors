@@ -1,71 +1,87 @@
-const options = ["rock", "paper", "scissors"];
+const roundCounter = document.querySelector("#round-counter");
+const playerScoreEl = document.querySelector("#player-score");
+const computerScoreEl = document.querySelector("#computer-score");
+const buttons = Array.from(document.querySelectorAll("button"));
+const resultEl = document.querySelector("#result");
+const OPTIONS = ["rock", "paper", "scissors"];
+const TOTAL_ROUNDS = 5;
+let round = 1;
+let computerScore = 0;
+let playerScore = 0;
+let playerChoice = "";
 
-function getHumanChoice() {
-  let humanChoice = "";
+buttons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    if (round <= 5) {
+      playerChoice = OPTIONS[index];
+      playRound(playerChoice, getComputerChoice());
+      roundCounter.textContent = round;
+      round++;
+    }
 
-  do {
-    humanChoice = prompt(
-      "Your choice: (rock, paper or scissors)"
-    ).toLowerCase();
-  } while (!options.includes(humanChoice));
-
-  return humanChoice;
-}
+    if (round === 6) {
+      resetGame();
+    }
+  });
+});
 
 function getComputerChoice() {
   const getRandomNum = () => Math.floor(Math.random() * 3);
 
   const randomNum = getRandomNum();
-  const computerChoice = options[randomNum];
+  const computerChoice = OPTIONS[randomNum];
 
   return computerChoice;
 }
 
-function playGame() {
-  const totalRounds = 5;
-  let computerScore = 0;
-  let humanScore = 0;
-
-  function playRound(humanChoice, computerChoice) {
-    const paperBeatsRock = humanChoice === "paper" && computerChoice === "rock";
-    const scissorsBeatsPaper =
-      humanChoice === "scissors" && computerChoice === "paper";
-    const rockBeatsScissors =
-      humanChoice === "rock" && computerChoice === "scissors";
-
-    let result = "";
-    let message = "";
-    if (humanChoice === computerChoice) {
-      message = "It's a tie!";
-      console.log(message);
-      return;
-    } else {
-      if (paperBeatsRock || scissorsBeatsPaper || rockBeatsScissors) {
-        result = "won";
-        humanScore++;
-      } else {
-        result = "lost";
-        computerScore++;
-      }
-    }
-
-    const firstElement = result === "won" ? humanChoice : computerChoice;
-    const secondElement = result === "won" ? computerChoice : humanChoice;
-
-    message = `You ${result}! ${firstElement} beats ${secondElement}`;
-    console.log(message);
-    return;
-  }
-
-  for (let i = 1; i <= totalRounds; i++) {
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
-    console.log(`\n--- Round ${i} ---`);
-    console.log(`You chose: ${humanChoice}\nComputer chose: ${computerChoice}`);
-    playRound(humanChoice, computerChoice);
-  }
-  console.log(
-    `\n--- Scoreboard ---\nYou: ${humanScore}\nComputer: ${computerScore}`
-  );
+function resetGame() {
+  toggleButtons();
+  setTimeout(() => {
+    round = 1;
+    computerScore = 0;
+    playerScore = 0;
+    playerChoice = "";
+    roundCounter.textContent = round;
+    playerScoreEl.textContent = playerScore;
+    computerScoreEl.textContent = computerScore;
+    resultEl.textContent = "";
+    toggleButtons();
+  }, 3000);
 }
-playGame();
+
+function toggleButtons() {
+  buttons.forEach((button) => {
+    button.toggleAttribute("disabled");
+  });
+}
+
+function playRound(playerChoice, computerChoice) {
+  const paperBeatsRock = playerChoice === "paper" && computerChoice === "rock";
+  const scissorsBeatsPaper =
+    playerChoice === "scissors" && computerChoice === "paper";
+  const rockBeatsScissors =
+    playerChoice === "rock" && computerChoice === "scissors";
+
+  let result = "";
+
+  if (playerChoice === computerChoice) {
+    resultEl.textContent = `It's a tie! You both chose ${playerChoice}`;
+    return;
+  } else {
+    if (paperBeatsRock || scissorsBeatsPaper || rockBeatsScissors) {
+      result = "won";
+      playerScore++;
+      playerScoreEl.textContent = playerScore;
+    } else {
+      result = "lost";
+      computerScore++;
+      computerScoreEl.textContent = computerScore;
+    }
+  }
+
+  const firstElement = result === "won" ? playerChoice : computerChoice;
+  const secondElement = result === "won" ? computerChoice : playerChoice;
+
+  resultEl.textContent = `You ${result}! ${firstElement} beats ${secondElement}`;
+  return;
+}
